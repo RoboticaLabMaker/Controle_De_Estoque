@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Controle de Itens</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+
+    <h1>Controle de Itens</h1>
+
+    <p>
+        Equipe de Robótica
+    </p>
+
+</header>
+
+
+<main>
+
+    <!-- BOAS-VINDAS -->
+
+    <section class="boas-vindas">
+
+        <h2>Olá! 👋</h2>
+
+        <p>
+            Bem-vindo ao sistema de controle de itens.
+            Selecione uma opção para começar.
+        </p>
+
+    </section>
+
+
+    <!-- MENU -->
+
+    <section class="menu">
+
+        <button onclick="mostrarTela('retirada')">
+
+            📤
+
+            <strong>Retirar Item</strong>
+
+            <span>
+                Registrar a retirada de um material
+            </span>
+
+        </button>
+
+
+        <button onclick="mostrarTela('estoque')">
+
+            📦
+
+            <strong>Consultar Estoque</strong>
+
+            <span>
+                Ver os itens disponíveis
+            </span>
+
+        </button>
+
+
+        <button onclick="mostrarTela('historico')">
+
+            📋
+
+            <strong>Meu Histórico</strong>
+
+            <span>
+                Consultar suas próprias retiradas
+            </span>
+
+        </button>
+
+
+        <button onclick="mostrarTela('equipe')">
+
+            🔐
+
+            <strong>Área da Robótica</strong>
+
+            <span>
+                Acesso restrito à equipe
+            </span>
+
+        </button>
+
+    </section>
+
+
+    <!-- RETIRADA -->
+
+    <section id="tela-retirada" class="tela">
+
+        <h2>📤 Retirar Item</h2>
+
+        <p class="explicacao">
+            Preencha seus dados e selecione os materiais que deseja retirar.
+        </p>
+
+
+        <label>Nome:</label>
+
+        <input
+            type="text"
+            id="nome-retirada"
+            placeholder="Digite seu nome"
+        >
+
+
+        <label>Celular:</label>
+
+        <input
+            type="tel"
+            id="telefone-retirada"
+            placeholder="(21) 99999-9999"
+        >
+
+
+        <label>E-mail:</label>
+
+        <input
+            type="email"
+            id="email-retirada"
+            placeholder="seuemail@email.com"
+        >
+
+
+        <label>Tipo de retirada:</label>
+
+        <div class="radio-area">
+
+            <label>
+                <input
+                    type="radio"
+                    name="tipo-retirada"
+                    value="interno"
+                    checked
+                    onchange="alterarTipoRetirada()"
+                >
+
+                Uso interno
+            </label>
+
+
+            <label>
+                <input
+                    type="radio"
+                    name="tipo-retirada"
+                    value="externo"
+                    onchange="alterarTipoRetirada()"
+                >
+
+                Uso externo
+            </label>
+
+        </div>
+
+
+        <div
+            id="aviso-externo"
+            class="aviso"
+            style="display:none;"
+        >
+
+            ⚠️ A retirada externa precisa ser confirmada
+            pela equipe de robótica.
+
+            <br><br>
+
+            Para agilizar o atendimento, entre em contato com:
+
+            <br><br>
+
+            <strong>
+                Giovanna Menezes — (21) 97276-0496
+            </strong>
+
+            <br>
+
+            <strong>
+                Thiago de Oliveira — (21) 99564-7745
+            </strong>
+
+        </div>
+
+
+        <!-- LISTA DE ITENS -->
+
+        <label>Itens:</label>
+
+        <div id="lista-itens-retirada">
+
+            <div class="item-retirada-linha">
+
+                <select
+                    class="item-retirada-select"
+                    onchange="mostrarOutroRetirada(this)"
+                >
+
+                    <option value="">
+                        Selecione um item
+                    </option>
+
+                </select>
+
+
+                <input
+                    type="number"
+                    class="quantidade-retirada-item"
+                    min="1"
+                    placeholder="Qtd."
+                >
+
+            </div>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="botao-voltar"
+            onclick="adicionarItemRetirada()"
+        >
+
+            ＋ Adicionar outro item
+
+        </button>
+
+
+        <button
+            class="botao-principal"
+            onclick="registrarRetirada()"
+        >
+
+            📤 Registrar retirada
+
+        </button>
+
+
+        <button
+            class="botao-voltar"
+            onclick="voltarMenu()"
+        >
+
+            ← Voltar
+
+        </button>
+
+    </section>
+
+
+    <!-- ESTOQUE -->
+
+    <section id="tela-estoque" class="tela">
+
+        <h2>📦 Estoque</h2>
+
+        <p class="explicacao">
+            Quantidade atual de materiais disponíveis.
+        </p>
+
+
+        <p id="contador-itens"></p>
+
+
+        <div id="lista-estoque"></div>
+
+
+        <button
+            class="botao-voltar"
+            onclick="voltarMenu()"
+        >
+
+            ← Voltar
+
+        </button>
+
+    </section>
+
+
+    <!-- MEU HISTÓRICO -->
+
+    <section id="tela-historico" class="tela">
+
+        <h2>📋 Meu Histórico </h2>
+
+        <p class="explicacao">
+            Consulte somente as suas próprias retiradas.
+Caso tenha esquecido o celular ou e-mail cadastrado, entre em contato com alguém da equipe de robótica. Contatos: Giovanna Menezes — (21) 97276-0496 ou Thiago de Oliveira — (21) 99564-7745.
+        </p>
+
+
+        <label>
+            Celular ou e-mail:
+        </label>
+
+        <input
+            type="text"
+            id="consulta-historico"
+            placeholder="Digite seu celular ou e-mail"
+        >
+
+
+        <button
+            class="botao-principal"
+            onclick="consultarMeuHistorico()"
+        >
+
+            🔎 Consultar
+
+        </button>
+
+
+        <div id="resultado-meu-historico"></div>
+
+
+        <div
+            id="aviso-devolucao-historico"
+            class="aviso"
+            style="display:none;"
+        >
+
+            📦 <strong>Devolução do item</strong>
+
+            <br><br>
+
+            Coloque o item na caixa sinalizada com
+            <strong>“DEVOLVA SEU ITEM AQUI”</strong>,
+            para que a equipe de robótica consiga averiguar
+            o material.
+
+            <br><br>
+
+            Após a conferência, a equipe confirmará a devolução
+            e o item voltará a ficar disponível no estoque.
+
+            <br><br>
+
+            Entraremos em contato pelos meios de comunicação
+            informados.
+
+        </div>
+
+
+        <button
+            class="botao-voltar"
+            onclick="voltarMenu()"
+        >
+
+            ← Voltar
+
+        </button>
+
+    </section>
+
+
+    <!-- ÁREA DA EQUIPE -->
+
+    <section id="tela-equipe" class="tela">
+
+        <h2>🔐 Área da Equipe de Robótica</h2>
+
+
+        <div id="login-equipe">
+
+            <p class="explicacao">
+                Esta área é exclusiva para a equipe de robótica.
+            </p>
+
+
+            <label>Senha:</label>
+
+            <input
+                type="password"
+                id="senha-equipe"
+                placeholder="Digite a senha"
+            >
+
+
+            <button
+                class="botao-principal"
+                onclick="entrarEquipe()"
+            >
+
+                🔓 Entrar
+
+            </button>
+
+        </div>
+
+
+        <div
+            id="painel-equipe"
+            style="display:none;"
+        >
+
+            <button
+                class="botao-principal"
+                onclick="mostrarHistoricoEquipe()"
+            >
+
+                📋 Histórico completo
+
+            </button>
+
+
+            <button
+                class="botao-principal"
+                onclick="mostrarRetiradasPendentes()"
+            >
+
+                📤 Retiradas externas pendentes
+
+            </button>
+
+
+            <button
+                class="botao-principal"
+                onclick="mostrarDevolucoesPendentes()"
+            >
+
+                📥 Devoluções pendentes
+
+            </button>
+
+
+            <button
+                class="botao-principal"
+                onclick="mostrarGerenciarEstoque()"
+            >
+
+                📦 Gerenciar estoque
+
+            </button>
+
+
+            <div id="conteudo-equipe"></div>
+
+        </div>
+
+
+        <button
+            class="botao-voltar"
+            onclick="voltarMenu()"
+        >
+
+            ← Voltar
+
+        </button>
+
+    </section>
+
+
+    <div id="mensagem"></div>
+
+</main>
+
+
+<footer>
+
+    <p>
+        Controle de Itens • Equipe de Robótica
+    </p>
+
+</footer>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+
+    import { getDatabase } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyB2-gXoH0pAoXD-WonIQMgTeNy2QQAGe5E",
+        authDomain: "c-robotic.firebaseapp.com",
+        projectId: "c-robotic",
+        storageBucket: "c-robotic.firebasestorage.app",
+        messagingSenderId: "204468581495",
+        appId: "1:204468581495:web:45de0c8e3e2a06c05cc272"
+    };
+
+    const app = initializeApp(firebaseConfig);
+
+    const db = getDatabase(
+        app,
+        "https://c-robotic-default-rtdb.firebaseio.com"
+    );
+
+    window.firebaseDB = db;
+
+    console.log("FIREBASE TESTE");
+
+    const script = document.createElement("script");
+    script.src = "script.js";
+    document.body.appendChild(script);
+    
+</script>
+
+</body>
+</html>
