@@ -478,24 +478,6 @@ Caso tenha esquecido o celular ou e-mail cadastrado, entre em contato com algué
 
     import { getDatabase } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-database.js";
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyB2-gXoH0pAoXD-WonIQMgTeNy2QQAGe5E",
-        authDomain: "c-robotic.firebaseapp.com",
-        projectId: "c-robotic",
-        storageBucket: "c-robotic.firebasestorage.app",
-        messagingSenderId: "204468581495",
-        appId: "1:204468581495:web:45de0c8e3e2a06c05cc272"
-    };
-
-    const app = initializeApp(firebaseConfig);
-
-    const db = getDatabase(
-        app,
-        "https://c-robotic-default-rtdb.firebaseio.com"
-    );
-
-    window.firebaseDB = db;
-
     console.log("FIREBASE TESTE");
 
     const script = document.createElement("script");
